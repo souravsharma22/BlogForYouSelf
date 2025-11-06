@@ -21,12 +21,22 @@ userRouter.post("/signup" ,async (req,res)=>{
 
     res.redirect("/");
 })
-userRouter.post("/signin" , async (req , res)=>{
-    const {email , password} =req.body;
-    const currUser = await user.matchPassword(email, password);
-    console.log(currUser);
+userRouter.post("/signin", async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const currUserToken = await user.matchPasswordAndGenerateToken(email, password);
+        // console.log(currUser);
+        res.cookie('token', currUserToken)
 
-    return res.redirect("/")
+        return res.redirect("/")
+    } catch (err) {
+        res.render('signin', { error: "Invalid UserName or Password" })
+    }
+})
+
+userRouter.get("/logout" , (req, res)=>{
+    res.clearCookie('token');
+    return res.redirect("/");
 })
 
 export {userRouter}

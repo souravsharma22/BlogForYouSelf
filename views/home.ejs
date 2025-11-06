@@ -9,7 +9,22 @@
   
     <h1>Hlo there This is Sourav Sharma</h1>
 
+    <% if(locals.user){ %>
+        <h2><%= user.name %></h2>
+        <h2><%= user.email %></h2>
+        <h2><%= user.role %></h2>
+    <% } %>
 
-    <%-include('./partials/head')  %>
+    <div class="container">
+        <form action="/user/signup">
+        <Button>SignUp</Button>
+    </form>
+    <form action="/user/signin">
+        <Button>SignIn</Button>
+    </form>
+    </div>
+
+
+    <%-include('./partials/script')  %>
 </body>
 </html>
