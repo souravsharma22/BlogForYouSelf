@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%-include('./partials/head') %>
+    <title>SignUp</title>
+</head>
+
+<body>
+    <%-include('./partials/nav') %>
+
+    <h2>Your Added Blog is Here!!</h2>
+    <% if(locals.blog){ %>
+        <div class="container mt-4">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= blog.title %></h5>
+                    </div>
+                    <img src="<%= blog.coverImageURL %>" width="300px">
+                    <h6><b><i>Written By:-</i></b> <img src="<%= blog.owner.profileImage %>" alt="" height="50px"> <%= blog.owner.name %></h6>
+                    <br>
+                    <br>
+                    <pre class="card-text"><%= blog.body %></pre>
+        </div>
+        <% } %>
+        <div class="container mt-3">
+            <h2>comment ( <%= comments.length %>)</h2>
+        </div>
+        <% if(locals.user){ %>
+            <div class="container mt-3">
+                
+            <form action="/blog/comment/<%= blog._id %>" method="post">
+                <input type="text" name="content" placeholder="comment">
+                <Button class="btn btn-primary">Post</Button>
+            </form>
+        </div>
+        
+        <% } %>
+        <div class="container mt-3">
+            
+            <% comments.forEach(comment => { %>
+                <div>
+                    <h7><b><i>By:-</i></b> <img src="<%= comment.createdBy.profileImage %>" alt="" height="50px"> <%= comment.createdBy.name %></h7>
+                    <pre><%= comment.content %></pre>
+                </div>
+
+            <% }) %>
+        </div>
+
+
+        
+
+    <%-include('./partials/head') %>
+</body>
+
+</html>

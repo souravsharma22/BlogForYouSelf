@@ -10,15 +10,17 @@
     <h1>Hlo there This is Sourav Sharma</h1>
 
     <% if(locals.allBlogs){ %>
-        <div class="container mt-4">
+        <div class="container mt-4 row row-cols-3">
             <% allBlogs.forEach(element=> { %>
-                <div class="card" style="width: 18rem;">
+                <div class="col">
+                    <div class="card col" style="width: 18rem;">
                     <img src="<%= element.coverImageURL %>" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title"><%= element.title %></h5>
-                        <p class="card-text"><%= element.body %></p>
-                        <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                        <!-- <p class="card-text"><%= element.body %></p> -->
+                        <a href="/blog/<%= element._id %>" class="btn btn-primary">View</a>
                     </div>
+                </div>
                 </div>
                 <% }) %>
         </div>
