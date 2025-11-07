@@ -1,7 +1,11 @@
+import  dotenv  from 'dotenv';
+dotenv.config();
+
 import express from 'express'
 import path from 'path'
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
+
 
 import { userRouter } from './routes/user.js';
 import { blogRouter } from './routes/blog.js';
@@ -12,7 +16,7 @@ import { cheackForAuthentication } from './middlewares/authentication.js';
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-mongoose.connect("mongodb://127.0.0.1:27017/SS22Blogs" ).then(
+mongoose.connect(process.env.MONGO_URL ).then(
     console.log("Mongodb Connected Successfully")
 ).catch((err)=>{
     console.log("OOPS!!! some error connecting to mongodb")

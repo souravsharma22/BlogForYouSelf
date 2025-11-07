@@ -1,7 +1,7 @@
 import  JWT  from "jsonwebtoken";
 
 
-const SECRET_KEY = process.env.SECRET_KEY || "IamBatmanEarth796";
+const SECRET_KEY = process.env.SECRET_KEY ;
 // console.log(SECRET_KEY);
 
 function createTokenForUser(user){
