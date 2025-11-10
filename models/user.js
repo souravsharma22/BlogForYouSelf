@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { createHmac , randomBytes} from 'node:crypto'
+import { createHmac , hash, randomBytes} from 'node:crypto'
 import { createTokenForUser } from "../services/authentication.js";
 
 const userSchema = mongoose.Schema({
@@ -35,9 +35,9 @@ const userSchema = mongoose.Schema({
 userSchema.pre("save" , function (next){
     const user = this;
     
-    if(!user.isModified("password")) return;
+    if(!user.isModified("password")) return next();
 
-    const salt = randomBytes(16).toString();
+    const salt = randomBytes(16).toString('hex');
 
     const hashedPassword = createHmac('sha256' , salt)
     .update(user.password)
@@ -53,17 +53,27 @@ userSchema.static("matchPasswordAndGenerateToken" , async function (email , pass
     const user = await this.findOne({email});
     if(!user) throw new Error("User NOT FOUND");
 
+    console.log('user is found');
+    // console.log(user)
     const hashedPassword = user.password;
     const salt = user.salt;
     const givenHashedPassword = createHmac('sha256', salt)
     .update(password)
     .digest('hex')
 
+    // console.log(givenHashedPassword)
+    // console.log(hashedPassword);
     if(hashedPassword !== givenHashedPassword)
+    {
+        console.log("this is tgrowing error ,,,,, the password mathching");
         throw new Error("INCORRECT PASSWORD.!!!!!")
+    }
+        
 
     // return user;
+    // console.log("creating token...........")
     const token = createTokenForUser(user);
+    // console.log("Token Created Successfully!!!!!!!!!!!!!!!!!!!!11");
 
     return token;
 

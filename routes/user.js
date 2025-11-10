@@ -23,6 +23,8 @@ userRouter.post("/signup" ,async (req,res)=>{
 })
 userRouter.post("/signin", async (req, res) => {
     const { email, password } = req.body;
+    // console.log(email);
+    // console.log(password);
     try {
         const currUserToken = await user.matchPasswordAndGenerateToken(email, password);
         // console.log(currUser);
